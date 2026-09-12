@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const categoryNames = [
     "県内ニュース",
+    "速報",
     "地域の話題",
     "行政",
     "暮らし",
