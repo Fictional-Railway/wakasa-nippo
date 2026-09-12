@@ -1,4 +1,3 @@
-
 /* ========================================
    若狭日報 - トップページ
 ======================================== */
@@ -11,13 +10,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const categoryList = document.getElementById("category-list");
   const searchForm = document.getElementById("search-form");
   const searchInput = document.getElementById("search-input");
-  const pageTitle = document.getElementById("page-title");
-  const pageDescription = document.getElementById("page-description");
+  const sectionTitle = document.getElementById("section-title");
   const breadcrumb = document.getElementById("breadcrumb-current");
   const resultCount = document.getElementById("result-count");
   const pagination = document.getElementById("pagination");
   const today = document.getElementById("today");
-  const headingDate = document.getElementById("heading-date");
 
   if (!newsList || !featuredNews || !categoryList) return;
 
@@ -37,6 +34,21 @@ document.addEventListener("DOMContentLoaded", () => {
     "イベント"
   ];
 
+  // 上部ナビゲーションの active (選択中表示) 切り替え
+  function updateMainNav() {
+    const navLinks = document.querySelectorAll(".main-nav .nav-link");
+    navLinks.forEach(link => {
+      const href = link.getAttribute("href");
+      if (!selectedCategory && !searchKeyword && href === "index.html") {
+        link.classList.add("active");
+      } else if (selectedCategory && href.includes(`category=${encodeURIComponent(selectedCategory)}`)) {
+        link.classList.add("active");
+      } else {
+        link.classList.remove("active");
+      }
+    });
+  }
+
   function escapeHTML(value) {
     return String(value ?? "").replace(/[&<>"']/g, char => ({
       "&": "&amp;",
@@ -52,13 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (Number.isNaN(date.getTime())) return dateString;
 
     return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
-  }
-
-  function formatShortDate(dateString) {
-    const date = new Date(`${dateString}T00:00:00`);
-    if (Number.isNaN(date.getTime())) return dateString;
-
-    return `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, "0")}/${String(date.getDate()).padStart(2, "0")}`;
   }
 
   function getSortedNews() {
@@ -96,6 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderFeatured(items) {
+    // カテゴリー選択時や検索時はトップの「注目のニュース」枠を非表示にする
     if (selectedCategory || searchKeyword || !items.length) {
       featuredSection.classList.add("hidden");
       return;
@@ -209,22 +215,20 @@ document.addEventListener("DOMContentLoaded", () => {
     pagination.innerHTML = links.join("");
   }
 
+  // カテゴリーや検索状況に応じて見出しテキストを変更
   function updatePageText(totalItems) {
     if (selectedCategory) {
-      pageTitle.textContent = selectedCategory;
-      pageDescription.textContent = "若狭県内のニュース";
-      breadcrumb.textContent = selectedCategory;
+      if (sectionTitle) sectionTitle.textContent = `${selectedCategory} 一覧`;
+      if (breadcrumb) breadcrumb.textContent = selectedCategory;
     } else if (searchKeyword) {
-      pageTitle.textContent = "ニュース検索";
-      pageDescription.textContent = `「${searchKeyword}」の検索結果`;
-      breadcrumb.textContent = "検索結果";
+      if (sectionTitle) sectionTitle.textContent = `「${searchKeyword}」の検索結果`;
+      if (breadcrumb) breadcrumb.textContent = "検索結果";
     } else {
-      pageTitle.textContent = "若狭県内のニュース";
-      pageDescription.textContent = "地域の出来事を、身近に。";
-      breadcrumb.textContent = "トップ";
+      if (sectionTitle) sectionTitle.textContent = "最新ニュース";
+      if (breadcrumb) breadcrumb.textContent = "トップ";
     }
 
-    resultCount.textContent = `${totalItems}件`;
+    if (resultCount) resultCount.textContent = `${totalItems}件`;
 
     const now = new Date();
     const dateText = now.toLocaleDateString("ja-JP", {
@@ -233,11 +237,12 @@ document.addEventListener("DOMContentLoaded", () => {
       day: "numeric"
     });
 
-    today.textContent = dateText;
-    headingDate.textContent = dateText;
+    if (today) today.textContent = dateText;
   }
 
   function render() {
+    updateMainNav(); // メニューのハイライト制御
+
     const filtered = getFilteredNews();
 
     const featuredItems =
