@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="若狭日報の記事ページ">
+  <title>記事｜若狭日報</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script src="news-data.js" defer></script>
+  <script src="article.js" defer></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-top">
+    <div class="container header-inner">
+      <a href="index.html" class="site-logo">
+        <span class="logo-symbol"><i class="fa-solid fa-newspaper"></i></span>
+        <span class="logo-text">
+          <strong>若狭日報</strong>
+          <small>WAKASA NIPPO</small>
+        </span>
+      </a>
+      <div class="header-date">
+        <span>若狭県の地域ニュース</span>
+        <span id="today"></span>
+      </div>
+    </div>
+  </div>
+
+  <nav class="main-nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-link">トップ</a>
+      <a href="index.html?category=県内ニュース" class="nav-link">県内ニュース</a>
+      <a href="index.html?category=地域の話題" class="nav-link">地域の話題</a>
+      <a href="index.html?category=行政" class="nav-link">行政</a>
+      <a href="index.html?category=暮らし" class="nav-link">暮らし</a>
+      <a href="index.html?category=イベント" class="nav-link">イベント</a>
+      <a href="about.html" class="nav-link">若狭日報について</a>
+    </div>
+  </nav>
+</header>
+
+<main class="container main-content">
+
+  <div class="breadcrumbs">
+    <a href="index.html">若狭日報</a>
+    <span>/</span>
+    <a href="index.html" id="breadcrumb-category">ニュース</a>
+    <span>/</span>
+    <span id="breadcrumb-title">記事</span>
+  </div>
+
+  <div class="article-layout">
+
+    <article class="article-page">
+
+      <div id="article-meta" class="news-meta"></div>
+
+      <h1 id="article-title"></h1>
+
+      <div id="article-image" class="article-image-container"></div>
+
+      <p id="article-summary" class="article-summary"></p>
+
+      <div id="article-body" class="article-body"></div>
+
+      <div class="article-footer">
+        <a href="index.html" class="back-link">
+          <i class="fa-solid fa-arrow-left"></i>
+          ニュース一覧へ戻る
+        </a>
+      </div>
+
+    </article>
+
+    <aside class="sidebar">
+
+      <div class="sidebar-box">
+        <h3>ニュースを探す</h3>
+        <form action="index.html" method="get" class="search-form">
+          <input type="search" name="q" placeholder="キーワードを入力" aria-label="ニュース検索">
+          <button type="submit" aria-label="検索">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
+      </div>
+
+      <div class="sidebar-box">
+        <h3>カテゴリー</h3>
+        <ul id="category-list" class="category-list"></ul>
+      </div>
+
+    </aside>
+
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <strong>若狭日報</strong>
+      <span>WAKASA NIPPO</span>
+    </div>
+    <p>若狭県の地域ニュースをお届けします。</p>
+    <div class="footer-links">
+      <a href="index.html">トップ</a>
+      <a href="about.html">若狭日報について</a>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 若狭日報</span>
+      <span>このサイトは架空の地域ニュースサイトです。</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
